@@ -28,18 +28,6 @@ def extended_gcd(a,b):
         u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
     return a,u0,u1
 
-
-def extended_gcd(a,b):
-    if a < b : 
-        a,b = b,a
-    u0, u1 = 1, 0
-    v0, v1 = 0, 1
-    while b != 0 :
-        q = int(a/b)
-        b, a = a%b, b
-        u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
-    return a,u0,u1
-
 def key_creation() :
     p = random.choice(list_prime(1000))
     q = random.choice(list_prime(1000))
@@ -47,12 +35,18 @@ def key_creation() :
     fiN = (p-1)*(q-1)
     e = 2
     a = 0
+    d = 2
+    res = 0
     while a != 1 :
         a,u0,u1 = extended_gcd(e, fiN)
         if a != 1 :
             e = e + 1
         pub = (n,e)
-    
-    return p,q,n,pub
+
+    while res != 1 :
+        res = (e*d)%fiN
+        d = d + 1
+    priv = (n,d-1)
+    return p,q,n,pub,priv
 
 print(key_creation())
