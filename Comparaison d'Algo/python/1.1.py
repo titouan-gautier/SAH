@@ -1,13 +1,21 @@
 
-max= int(input("Entrez n :"))
-liste = [0]
-def list_prime(n) :
-    for n in range(max):
-        if n > 1:
-            for i in range(2,n):
-                if (n % i) == 0:
-                     break
-                else:
-                    liste.append(i)
-                
-print(list_prime(10))
+x = int(input("Enter the number:"))
+
+def list_prime(x) :
+    i=1
+    liste = []
+    for k in range (1, (x+1), 1):
+        c=0
+        for j in range (1, (i+1), 1):
+            a = i%j
+            if (a==0):
+                c = c+1
+
+        if (c==2):
+            liste.append(i)
+        else:
+            k = k-1
+        i=i+1
+    return liste
+
+print(list_prime(x))
