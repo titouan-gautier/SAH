@@ -79,7 +79,26 @@ def encryption(n,pub,msg) :
         msgc.append((int(i)**e)%n)
     return msgc
 
+msgc = encryption(n,pub,msg)
 
-print(convert_msg(msg))
-print(encryption(n,pub,msg))
-""" print(p,q,n,pub,priv,fiN) """
+def decryption(n,priv,msgc):
+    d = priv[1]
+    msgf = []
+    for i in msgc : 
+        msgf.append((i**d)%n)
+    return msgf
+
+msgf = decryption(n,priv,msgc)
+
+def deconvert_msg(msgf) :
+    msgdecrypte = []
+    while len(msgf) != 0 :
+        msgdecrypte.append(msgf[:3])
+        msgf = msgf[3:]
+    return msgdecrypte
+
+print(decryption(n,priv,msgc))
+print(deconvert_msg(msgf))
+
+
+""" git as """
