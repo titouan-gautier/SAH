@@ -1,4 +1,6 @@
-import random 
+msg = "salut"
+
+import random
 
 def list_prime(x) :
     i=1
@@ -49,58 +51,53 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
-msg = "salut"
+p,q,n,pub,priv,fiN = key_creation()
 
 def convert_msg(msg) :
     msgcrypte = ""
-    
+    car = 0
     for i in range(len(msg)) :
-        msgcrypte += str(ord(msg[i]))
-    
+        car = str(ord(msg[i]))
+        if len(str(car)) <= 2 :
+            msgcrypte += "0" + str(ord(msg[i]))
+        else :
+            msgcrypte += str(ord(msg[i]))
     while len(msgcrypte)%4 !=0 :
         msgcrypte = "0" + msgcrypte
-
-    msgcryptefin = []
-
-    while len(msgcrypte) != 0 :
-        msgcryptefin.append(msgcrypte[:4])
-        msgcrypte = msgcrypte[4:]
-    return msgcryptefin
-
-p,q,n,pub,priv,fiN = key_creation()
-
+    return msgcrypte
 
 def encryption(n,pub,msg) :
     msgconvert = convert_msg(msg)
     e = pub[1]
     n = pub[0]
-    msgc = []
-    for i in msgconvert:
-        msgc.append((int(i)**e)%n)
+    msgc = ""
+    part = ""
+    while len(msgconvert) != 0 :
+        part = msgconvert[:4]
+        msgc += str((pow(int(part),e))%n)
+        msgconvert = msgconvert[4:]
+        part = ""
     return msgc
+
+
 
 msgc = encryption(n,pub,msg)
 
 def decryption(n,priv,msgc):
     d = priv[1]
-    msgf = []
-    for i in msgc : 
-        msgf.append((i**d)%n)
-    return msgf
+    msgf = ""
+    msgfin = ""
+    part = ""
+    while len(msgc) != 0 : 
+        for i in msgc :
+            if i == " " :
+                part = msgc[:i]
+                msgf += ((int(i)**d)%n)
+                msgc = msgc[i:]
+                part = ""
+    #msgfin = ''.join(str(e) for e in msgf)
+    return msgc
 
 print(convert_msg(msg))
+print(encryption(n,pub,msg))
 print(decryption(n,priv,msgc))
-msgf = decryption(n,priv,msgc)
-
-def deconvert_msg(msgf) :
-    msgdecrypte = []
-    while len(msgf) != 0 :
-        msgdecrypte.append(msgf[:3])
-        msgf = msgf[3:]
-    return msgdecrypte
-
-""" print(decryption(n,priv,msgc))
-print(deconvert_msg(msgf))
- """
-
-""" Tout mettre en un string pour tous redecouper en paquet de 3 """
