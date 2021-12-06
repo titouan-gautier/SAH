@@ -90,5 +90,8 @@ def decryption(n,priv,msgc):
         msgf.append((i**d)%n)
     return msgf 
 
+
+def convert_inverse(msgf):
+    
 print (decryption(n,priv,msgc))
 print(convert_msg(msg))
