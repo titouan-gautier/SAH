@@ -49,6 +49,7 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
+msg = "salut"
 
 def convert_msg(msg) :
     msgcrypte = ""
@@ -67,16 +68,18 @@ def convert_msg(msg) :
     return msgcryptefin
 
 p,q,n,pub,priv,fiN = key_creation()
-msg = convert_msg("salut")
 
 
 def encryption(n,pub,msg) :
+    msgconvert = convert_msg(msg)
     e = pub[1]
     n = pub[0]
     msgc = []
-    for i in msg:
+    for i in msgconvert:
         msgc.append((int(i)**e)%n)
     return msgc
 
+
+print(convert_msg(msg))
 print(encryption(n,pub,msg))
 """ print(p,q,n,pub,priv,fiN) """
