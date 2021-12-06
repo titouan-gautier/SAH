@@ -49,4 +49,48 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv
 
-print(key_creation())
+
+msg = "salut"
+
+def convert_msg(msg) :
+    msgcrypte = ""
+    
+    for i in range(len(msg)) :
+        msgcrypte += str(ord(msg[i]))
+        
+    
+    if len(msgcrypte)%4 !=0 :
+        msgcrypte = "0" + msgcrypte
+   
+    msgcryptefin = []
+
+    while len(msgcrypte) != 0 :
+        msgcryptefin.append(msgcrypte[:3])
+        msgcrypte = msgcrypte[3:]
+    return msgcryptefin
+
+
+msgc = convert_msg(msg)
+
+def deconvert_msg(msgc) :
+    msgdecrypte = []
+    for i in range(len(msgc)) :
+        msgdecrypte.append(chr(msgc[i]))
+    return msg
+
+
+p,q,n,pub,priv = key_creation()
+
+def encryption(n,pub,msg) :
+    e = pub[1]
+    n = pub[0]
+    msgc = convert_msg(msg)
+    print(msgc)
+    msgcrypt = []
+    for i in range(len(msgc)):
+        if msgc[i] < n :
+            msgcrypt.append((msgc[i]^e)%n)
+    return msgcrypt
+
+
+print(convert_msg(msg))
