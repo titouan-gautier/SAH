@@ -49,22 +49,20 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
-msg = "salut"
+msg = "salut gros bg comment vas-tu?"
 
 def convert_msg(msg) :
     msgcrypte = ""
-    
+    car = 0
     for i in range(len(msg)) :
-        msgcrypte += str(ord(msg[i]))
+        car = str(ord(msg[i]))
+        if len(str(car)) <= 2 :
+            msgcrypte += "0" + str(ord(msg[i]))
+        else :
+            msgcrypte += str(ord(msg[i]))
     while len(msgcrypte)%4 !=0 :
         msgcrypte = "0" + msgcrypte
-
-    msgcryptefin = []
-
-    while len(msgcrypte) != 0 :
-        msgcryptefin.append(msgcrypte[:4])
-        msgcrypte = msgcrypte[4:]
-    return msgcryptefin
+    return msgcrypte
 
 p,q,n,pub,priv,fiN = key_creation()
 
@@ -94,29 +92,18 @@ msgf = decryption(n,priv,msgc)
 def convert_inverse(msgf):
     for e in msgf :
         msgdecrypte = "".join(str(i) for i in msgf)
-        e = e + 1
-        return msgdecrypte 
+        e = e + 1 
 
 
-    msgdecryptefin = []
-    "l = "
-    while len(msgdecrypte) != 0 :    
-        msgdecryptefin.append(msgdecrypte[:3])
-        msgdecrypte = msgdecrypte[3:]
-       
-       
-       
-        "for i in msgdecrypte[:3] :"
-        "l += str(msgdecrypte[i])"
-        "msgdecrypte = msgdecrypte[3:]"
-        "msgdecryptefin.append(l)"
+    msgdecryptefin = ""
+    part = ""
+    while msgdecrypte[0] == "0" : 
+        msgdecrypte = msgdecrypte[1:]
+    while len(msgdecrypte) != 0 :
+        part = msgdecrypte[:3]
+        msgdecryptefin += str(chr(int(part)))
+        msgdecrypte = msgdecrypte[3:] 
+        part = ""
     return msgdecryptefin          
 
-    "msgdecryptefin = "
-    "while len(msgdecrypte) != 0 :"
-
-    "return msgdecrypte"
-
-print (decryption(n,priv,msgc))
-print(convert_msg(msg))
 print(convert_inverse(msgf))
