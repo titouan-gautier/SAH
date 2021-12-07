@@ -49,7 +49,7 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
-msg = "salut gros bg comment vas-tu?"
+msg = "salut gros bg comment vas-tu? Moi ça va je m'appelle jules, je suis à l'iut du centre de nantes et j'ai fait un programme avec titouan pour crypter et decrypter des messages "
 
 def convert_msg(msg) :
     msgcrypte = ""
