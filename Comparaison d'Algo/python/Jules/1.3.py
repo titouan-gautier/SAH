@@ -56,10 +56,9 @@ def convert_msg(msg) :
     
     for i in range(len(msg)) :
         msgcrypte += str(ord(msg[i]))
-    
     while len(msgcrypte)%4 !=0 :
         msgcrypte = "0" + msgcrypte
-   
+
     msgcryptefin = []
 
     while len(msgcrypte) != 0 :
@@ -90,8 +89,34 @@ def decryption(n,priv,msgc):
         msgf.append((i**d)%n)
     return msgf 
 
+msgf = decryption(n,priv,msgc)
 
 def convert_inverse(msgf):
-    
+    for e in msgf :
+        msgdecrypte = "".join(str(i) for i in msgf)
+        e = e + 1
+        return msgdecrypte 
+
+
+    msgdecryptefin = []
+    "l = "
+    while len(msgdecrypte) != 0 :    
+        msgdecryptefin.append(msgdecrypte[:3])
+        msgdecrypte = msgdecrypte[3:]
+       
+       
+       
+        "for i in msgdecrypte[:3] :"
+        "l += str(msgdecrypte[i])"
+        "msgdecrypte = msgdecrypte[3:]"
+        "msgdecryptefin.append(l)"
+    return msgdecryptefin          
+
+    "msgdecryptefin = "
+    "while len(msgdecrypte) != 0 :"
+
+    "return msgdecrypte"
+
 print (decryption(n,priv,msgc))
 print(convert_msg(msg))
+print(convert_inverse(msgf))
