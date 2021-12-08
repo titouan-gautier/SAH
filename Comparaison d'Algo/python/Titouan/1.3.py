@@ -49,7 +49,7 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
-msg = "salut"
+msg = "salut gros bg comment vas-tu? Moi ça va je m'appelle jules, je suis à l'iut du centre de nantes et j'ai fait un programme avec titouan pour crypter et decrypter des messages. C'est super cela marche tres bien je suis content et je vai reussir mon année avec succès grace a mes effort acharné"
 
 def convert_msg(msg) :
     msgcrypte = ""
@@ -88,8 +88,9 @@ def decryption(n,priv,msgc):
         msgf.append((i**d)%n)
     return msgf
 
-print(convert_msg(msg))
-print(decryption(n,priv,msgc))
+#print(convert_msg(msg))
+print(encryption(n,pub,msg))
+#print(decryption(n,priv,msgc))
 msgf = decryption(n,priv,msgc)
 
 def deconvert_msg(msgf) :

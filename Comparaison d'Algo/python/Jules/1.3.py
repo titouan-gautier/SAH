@@ -49,7 +49,7 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
-msg = "salut gros bg comment vas-tu? Moi ça va je m'appelle jules, je suis à l'iut du centre de nantes et j'ai fait un programme avec titouan pour crypter et decrypter des messages "
+msg = "salut gros bg comment vas-tu? Moi ça va je m'appelle jules, je suis à l'iut du centre de nantes et j'ai fait un programme avec titouan pour crypter et decrypter des messages. C'est super cela marche tres bien je suis content et je vai reussir mon année avec succès grace a mes effort acharné"
 
 def convert_msg(msg) :
     msgcrypte = ""
@@ -105,5 +105,7 @@ def convert_inverse(msgf):
         msgdecrypte = msgdecrypte[3:] 
         part = ""
     return msgdecryptefin          
+
+print(encryption(n,pub,msg))
 
 print(convert_inverse(msgf))

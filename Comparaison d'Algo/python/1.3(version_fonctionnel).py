@@ -1,6 +1,4 @@
-msg = "salut"
-
-import random
+import random 
 
 def list_prime(x) :
     i=1
@@ -51,7 +49,7 @@ def key_creation() :
     priv = (n,d-1)
     return p,q,n,pub,priv,fiN
 
-p,q,n,pub,priv,fiN = key_creation()
+msg = "nique ta mère !"
 
 def convert_msg(msg) :
     msgcrypte = ""
@@ -66,38 +64,62 @@ def convert_msg(msg) :
         msgcrypte = "0" + msgcrypte
     return msgcrypte
 
+p,q,n,pub,priv,fiN = key_creation()
+
+
 def encryption(n,pub,msg) :
     msgconvert = convert_msg(msg)
     e = pub[1]
     n = pub[0]
-    msgc = ""
-    part = ""
-    while len(msgconvert) != 0 :
-        part = msgconvert[:4]
-        msgc += str((pow(int(part),e))%n)
-        msgconvert = msgconvert[4:]
-        part = ""
+    msgc = []
+    for i in msgconvert:
+        msgc.append((int(i)**e)%n)
     return msgc
-
-
 
 msgc = encryption(n,pub,msg)
 
 def decryption(n,priv,msgc):
     d = priv[1]
-    msgf = ""
-    msgfin = ""
-    part = ""
-    while len(msgc) != 0 : 
-        for i in msgc :
-            if i == " " :
-                part = msgc[:i]
-                msgf += ((int(i)**d)%n)
-                msgc = msgc[i:]
-                part = ""
-    #msgfin = ''.join(str(e) for e in msgf)
-    return msgc
+    msgf = []
+    for i in msgc : 
+        msgf.append((i**d)%n)
+    return msgf 
 
-""" print(convert_msg(msg)) """
+msgf = decryption(n,priv,msgc)
+
+def convert_inverse(msgf):
+    for e in msgf :
+        msgdecrypte = "".join(str(i) for i in msgf)
+        e = e + 1 
+
+
+    msgdecryptefin = ""
+    part = ""
+    i = 0
+    count = 0
+    k = 0
+
+    while msgdecrypte[count] == "0" :
+        count = count + 1
+
+    if len(msgdecrypte[count:]) % 3 == 0 :
+        msgdecrypte = msgdecrypte[count:]
+    else :
+        msgdecrypte = msgdecrypte[count-1:]
+    
+    count = 0
+    
+    while len(msgdecrypte) != 0 :
+        part = msgdecrypte[:3]
+        msgdecryptefin += str(chr(int(part)))
+        msgdecrypte = msgdecrypte[3:] 
+        part = ""
+    return msgdecryptefin          
+
+
+print(convert_msg(msg))
 print(encryption(n,pub,msg))
-""" print(decryption(n,priv,msgc))  """
+print(decryption(n,priv,msgc))
+print(convert_inverse(msgf))
+
+#coucou = 99 111 117 99 111 117 
