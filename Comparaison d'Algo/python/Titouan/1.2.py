@@ -7,6 +7,6 @@ def extended_gcd(a,b):
         q = int(a/b)
         b, a = a%b, b
         u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
-    return a,u0,u1
+    return a,u0,u1,q
 
 print(extended_gcd(243, 198))

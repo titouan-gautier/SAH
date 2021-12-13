@@ -1,4 +1,12 @@
-import random 
+## Import ##
+
+import random
+
+## Message ##
+
+msg = "je suis titouan"
+
+## Question 1.1 ##
 
 def list_prime(x) :
     i=1
@@ -17,6 +25,8 @@ def list_prime(x) :
         i=i+1
     return liste
 
+## Question 1.2 ##
+
 def extended_gcd(a,b):
     if a < b : 
         a,b = b,a
@@ -27,6 +37,8 @@ def extended_gcd(a,b):
         b, a = a%b, b
         u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
     return a,u0,u1
+
+## Question 1.3 ##
 
 def key_creation() :
     p = random.choice(list_prime(1000))
@@ -47,9 +59,11 @@ def key_creation() :
         res = (e*d)%fiN
         d = d + 1
     priv = (n,d-1)
-    return p,q,n,pub,priv,fiN
+    return n,pub,priv
 
-msg = "nique ta mère !"
+## Question 1.4 ##
+
+    # Convertir le message en code ASCII #
 
 def convert_msg(msg) :
     msgcrypte = ""
@@ -64,8 +78,7 @@ def convert_msg(msg) :
         msgcrypte = "0" + msgcrypte
     return msgcrypte
 
-p,q,n,pub,priv,fiN = key_creation()
-
+    # Encrypter le msg #
 
 def encryption(n,pub,msg) :
     msgconvert = convert_msg(msg)
@@ -76,7 +89,9 @@ def encryption(n,pub,msg) :
         msgc.append((int(i)**e)%n)
     return msgc
 
-msgc = encryption(n,pub,msg)
+## Question 1.5 ##
+
+    # Décrypter le message #
 
 def decryption(n,priv,msgc):
     d = priv[1]
@@ -85,7 +100,7 @@ def decryption(n,priv,msgc):
         msgf.append((i**d)%n)
     return msgf 
 
-msgf = decryption(n,priv,msgc)
+    #Convertir le code ASCII en message #
 
 def convert_inverse(msgf):
     for e in msgf :
@@ -113,12 +128,17 @@ def convert_inverse(msgf):
         msgdecryptefin += str(chr(int(part)))
         msgdecrypte = msgdecrypte[3:] 
         part = ""
-    return msgdecryptefin          
+    return msgdecryptefin
 
+## Variables ##
+
+n,pub,priv = key_creation()
+msgc = encryption(n,pub,msg)
+msgf = decryption(n,priv,msgc)
+
+## Print ##
 
 print(convert_msg(msg))
 print(encryption(n,pub,msg))
 print(decryption(n,priv,msgc))
 print(convert_inverse(msgf))
-
-#coucou = 99 111 117 99 111 117 
