@@ -83,6 +83,7 @@ def decryption(n,priv,msgc):
     msgf = []
     for i in msgc : 
         msgf.append((i**d)%n)
+    print(msgf)
     return msgf 
 
 msgf = decryption(n,priv,msgc)
@@ -91,7 +92,7 @@ def convert_inverse(msgf):
     for e in msgf :
         msgdecrypte = "".join(str(i) for i in msgf)
         e = e + 1 
-
+    print(msgdecrypte)
     msgdecryptefin = ""
     part = ""
     i = 0
@@ -116,9 +117,9 @@ def convert_inverse(msgf):
     return msgdecryptefin          
 
 
-print(convert_msg(msg))
-print(encryption(n,pub,msg))
+#print(convert_msg(msg))
+#print(encryption(n,pub,msg))
 print(decryption(n,priv,msgc))
-print(convert_inverse(msgf))
+#print(convert_inverse(msgf))
 
 #coucou = 99 111 117 99 111 117 

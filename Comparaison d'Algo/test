@@ -1,0 +1,124 @@
+import math
+import random
+
+def list_prime(n):
+    test = 3
+    l = [2]
+    elements = 0
+    while l[elements] <= n:
+        if test > n:
+            return l
+        premier = True
+        limite = math.floor(math.sqrt(test))
+        for i in l:
+            if i > limite:
+                break
+            if test%i == 0:
+                premier = False
+        if premier:
+            l.append(test)
+            elements += 1
+        test += 1
+
+        
+    return l[25:]
+
+# print(list_prime(100))
+
+def extended_gcd(a,b):
+    if a < b :
+        a,b = b,a
+    u0, u1 = 1, 0
+    v0, v1 = 0, 1
+    while b != 0:
+        q = int(a/b)
+        b, a = a%b, b
+        u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
+    return a,u0,u1
+
+# print(extended_gcd(210, 55))
+
+def key_creation():
+    p = random.choice(list_prime(2000))
+    q = random.choice(list_prime(2000))
+    n = p*q
+    phin = (p-1)*(q-1)
+    e = 2
+    a = 0
+    res = 0
+    d = 2
+    while a != 1:
+        a,_,_ = extended_gcd(e,phin)
+        e += 1
+    e = e - 1
+    pub = (n,e)
+    while res != 1 :
+        res = (e * d) % phin 
+        d += 1
+    d = d - 1 
+    priv = (n,d)
+    return n, pub, priv
+
+# print(key_creation())
+
+
+def convert_msg(msg):
+    msgc = ""
+    a = ""
+    for i in range(len(msg)):
+        a = str(ord(msg[i]))
+        if len(a) != 3:
+            a = "0" + a
+        msgc += a 
+
+    while len(msgc) % 4 != 0: 
+        msgc = "0"+msgc 
+
+    msgc2 = []
+    while len(msgc) != 0:
+        msgc2.append(msgc[:4])
+        msgc = msgc[4:]
+    
+    return msgc2
+
+
+def encryption(n,pub,msg):
+    e=pub[1]
+    msgf = []
+    for i in msg:
+        msgf.append((int(i)**e) % n)
+    return msgf
+
+
+
+def decryption(n, priv, msg):
+    d = priv[1]
+    msgf = []
+    for i in msg:
+        calc = str((i**d) % n)
+        if len(calc) < 4:
+            msgf.append("0" + calc)
+        else:
+            msgf.append(calc)
+    return msgf
+
+n, pub, priv = key_creation()
+msg = convert_msg("enculé")
+msgcripted = encryption(n,pub,msg)
+msgdecripted = decryption(n,priv,msgcripted)
+print(msg)
+
+def convert_msg_inverse(msg):
+    msg2 = ""
+    msgfinal = ""
+    for i in msg:
+        msg2 += i
+    
+    compte = len(msg2)
+    while compte >= 3:
+        msgfinal = chr(int(msg2[compte-3:compte])) + msgfinal
+        compte -= 3
+        
+    return msgfinal
+
+print(convert_msg_inverse(msgdecripted))

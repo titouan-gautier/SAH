@@ -4,7 +4,7 @@ import random
 
 ## Message ##
 
-msg = "je suis titouan"
+msg = "enculer"
 
 ## Question 1.1 ##
 
@@ -67,16 +67,25 @@ def key_creation() :
 
 def convert_msg(msg) :
     msgcrypte = ""
-    car = 0
+    car = ""
+    
     for i in range(len(msg)) :
         car = str(ord(msg[i]))
-        if len(str(car)) <= 2 :
-            msgcrypte += "0" + str(ord(msg[i]))
-        else :
-            msgcrypte += str(ord(msg[i]))
-    while len(msgcrypte)%4 !=0 :
-        msgcrypte = "0" + msgcrypte
-    return msgcrypte
+        if len(car) != 3 :
+            car = "0" + car
+        msgcrypte += car
+    
+
+    while (len(msgcrypte) % 4) != 0 :
+        msgcrypte = "0"+msgcrypte
+    
+    
+    msgcrypte2 = []
+    while len(msgcrypte) != 0:
+        msgcrypte2.append(msgcrypte[:4])
+        msgcrypte = msgcrypte[4:]
+    
+    return msgcrypte2
 
     # Encrypter le msg #
 
@@ -95,24 +104,26 @@ def encryption(n,pub,msg) :
 
 def decryption(n,priv,msgc):
     d = priv[1]
-    msgf = []
-    for i in msgc : 
-        msgf.append((i**d)%n)
-    return msgf 
+    msgd = []
+    
+    for i in msgc :
+        a = str((i**d)%n) 
+        while len(a) != 4 :
+            a = "0" + a
+        msgd.append(a)
+    
+    return msgd
 
-    #Convertir le code ASCII en message #
+    # Convertir le code ASCII en message #
 
-def convert_inverse(msgf):
-    for e in msgf :
-        msgdecrypte = "".join(str(i) for i in msgf)
-        e = e + 1 
-
+def convert_inverse(msgd):
+    msgdecrypte = ""
     msgdecryptefin = ""
-    part = ""
-    i = 0
     count = 0
-    k = 0
 
+    for i in range(len(msgd)):
+        msgdecrypte += str(msgd[i])
+    
     while msgdecrypte[count] == "0" :
         count = count + 1
 
@@ -120,9 +131,7 @@ def convert_inverse(msgf):
         msgdecrypte = msgdecrypte[count:]
     else :
         msgdecrypte = msgdecrypte[count-1:]
-    
-    count = 0
-    
+
     while len(msgdecrypte) != 0 :
         part = msgdecrypte[:3]
         msgdecryptefin += str(chr(int(part)))
@@ -134,11 +143,11 @@ def convert_inverse(msgf):
 
 n,pub,priv = key_creation()
 msgc = encryption(n,pub,msg)
-msgf = decryption(n,priv,msgc)
+msgd = decryption(n,priv,msgc)
 
 ## Print ##
 
 print(convert_msg(msg))
 print(encryption(n,pub,msg))
 print(decryption(n,priv,msgc))
-print(convert_inverse(msgf))
+print(convert_inverse(msgd))
