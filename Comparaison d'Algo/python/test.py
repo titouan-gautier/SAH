@@ -17,7 +17,7 @@ def list_prime(x) :
         else:
             k = k-1
         i=i+1
-    return liste
+    return liste[]
 
 def extended_gcd(a,b):
     if a < b : 
