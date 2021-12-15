@@ -1,4 +1,12 @@
-import random 
+## Import ##
+
+import random
+
+## Message ##
+
+msg = "enculer"
+
+## Question 1.1 ##
 
 def list_prime(x) :
     i=1
@@ -17,6 +25,8 @@ def list_prime(x) :
         i=i+1
     return liste
 
+## Question 1.2 ##
+
 def extended_gcd(a,b):
     if a < b : 
         a,b = b,a
@@ -27,6 +37,8 @@ def extended_gcd(a,b):
         b, a = a%b, b
         u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
     return a,u0,u1
+
+## Question 1.3 ##
 
 def key_creation() :
     p = random.choice(list_prime(1000))
@@ -47,25 +59,35 @@ def key_creation() :
         res = (e*d)%fiN
         d = d + 1
     priv = (n,d-1)
-    return p,q,n,pub,priv,fiN
+    return n,pub,priv
 
-msg = "loin de moi l'idée de graver dans le marbre de tailler dans une écorce d'arbre loin de moi l'idée de suggérer que je m'en moque que je n'en ai rien à faire que guère je ne m'en soucie loin de moi ces folies mais je m'échine depuis octobre et pourquoi donc depuis début octobre même et qui m'aime me suive depuis octobre depuis ce même dernier octobre le trois du mois je crois depuis ce temps-là depuis trois mois depuis trois mois et une semaine je m'échine ailleurs et le très long texte n'a pas avancé d'un poil pas beaucoup sans doute est-ce mon côté velléitaire qui ne cesse de me jouer"
+## Question 1.4 ##
+
+    # Convertir le message en code ASCII #
 
 def convert_msg(msg) :
     msgcrypte = ""
-    car = 0
+    car = ""
+    
     for i in range(len(msg)) :
         car = str(ord(msg[i]))
-        if len(str(car)) <= 2 :
-            msgcrypte += "0" + str(ord(msg[i]))
-        else :
-            msgcrypte += str(ord(msg[i]))
-    while len(msgcrypte)%4 !=0 :
-        msgcrypte = "0" + msgcrypte
-    return msgcrypte
+        if len(car) != 3 :
+            car = "0" + car
+        msgcrypte += car
+    
 
-p,q,n,pub,priv,fiN = key_creation()
+    while (len(msgcrypte) % 4) != 0 :
+        msgcrypte = "0"+msgcrypte
+    
+    
+    msgcrypte2 = []
+    while len(msgcrypte) != 0:
+        msgcrypte2.append(msgcrypte[:4])
+        msgcrypte = msgcrypte[4:]
+    
+    return msgcrypte2
 
+    # Encrypter le msg #
 
 def encryption(n,pub,msg) :
     msgconvert = convert_msg(msg)
@@ -76,29 +98,32 @@ def encryption(n,pub,msg) :
         msgc.append((int(i)**e)%n)
     return msgc
 
-msgc = encryption(n,pub,msg)
+## Question 1.5 ##
+
+    # Décrypter le message #
 
 def decryption(n,priv,msgc):
     d = priv[1]
-    msgf = []
-    for i in msgc : 
-        msgf.append((i**d)%n)
-    print(msgf)
-    return msgf 
+    msgd = []
+    
+    for i in msgc :
+        a = str((i**d)%n) 
+        while len(a) != 4 :
+            a = "0" + a
+        msgd.append(a)
+    
+    return msgd
 
-msgf = decryption(n,priv,msgc)
+    # Convertir le code ASCII en message #
 
-def convert_inverse(msgf):
-    for e in msgf :
-        msgdecrypte = "".join(str(i) for i in msgf)
-        e = e + 1 
-    print(msgdecrypte)
+def convert_inverse(msgd):
+    msgdecrypte = ""
     msgdecryptefin = ""
-    part = ""
-    i = 0
     count = 0
-    k = 0
 
+    for i in range(len(msgd)):
+        msgdecrypte += str(msgd[i])
+    
     while msgdecrypte[count] == "0" :
         count = count + 1
 
@@ -106,20 +131,23 @@ def convert_inverse(msgf):
         msgdecrypte = msgdecrypte[count:]
     else :
         msgdecrypte = msgdecrypte[count-1:]
-    
-    count = 0
-    
+
     while len(msgdecrypte) != 0 :
         part = msgdecrypte[:3]
         msgdecryptefin += str(chr(int(part)))
         msgdecrypte = msgdecrypte[3:] 
         part = ""
-    return msgdecryptefin          
+    return msgdecryptefin
 
+## Variables ##
 
-#print(convert_msg(msg))
-#print(encryption(n,pub,msg))
+n,pub,priv = key_creation()
+msgc = encryption(n,pub,msg)
+msgd = decryption(n,priv,msgc)
+
+## Print ##
+
+print(convert_msg(msg))
+print(encryption(n,pub,msg))
 print(decryption(n,priv,msgc))
-#print(convert_inverse(msgf))
-
-#coucou = 99 111 117 99 111 117 
+print(convert_inverse(msgd))
