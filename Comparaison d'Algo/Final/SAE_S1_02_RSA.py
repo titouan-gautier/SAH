@@ -4,7 +4,7 @@ import random
 
 ## Message ##
 
-msg = "enculer"
+msg = "hello world"
 
 ## Question 1.1 ##
 
@@ -23,7 +23,7 @@ def list_prime(x) :
         else:
             k = k-1
         i=i+1
-    return liste
+    return liste[25:]
 
 ## Question 1.2 ##
 
@@ -41,8 +41,8 @@ def extended_gcd(a,b):
 ## Question 1.3 ##
 
 def key_creation() :
-    p = random.choice(list_prime(1000))
-    q = random.choice(list_prime(1000))
+    p = random.choice(list_prime(2000))
+    q = random.choice(list_prime(2000))
     n = p*q
     fiN = (p-1)*(q-1)
     e = 2
@@ -95,7 +95,7 @@ def encryption(n,pub,msg) :
     n = pub[0]
     msgc = []
     for i in msgconvert:
-        msgc.append((int(i)**e)%n)
+        msgc.append(pow(int(i),e,n))
     return msgc
 
 ## Question 1.5 ##
@@ -105,10 +105,10 @@ def encryption(n,pub,msg) :
 def decryption(n,priv,msgc):
     d = priv[1]
     msgd = []
-    
+    a = ""
     for i in msgc :
-        a = str((i**d)%n) 
-        while len(a) != 4 :
+        a = str(pow(i,d,n))
+        while len(a) < 4 :
             a = "0" + a
         msgd.append(a)
     
