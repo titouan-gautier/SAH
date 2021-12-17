@@ -108,55 +108,26 @@ def encryption(n, pub, msg):
 
 
 def decryption(n, priv, msgc):
+    print(msgc)
     d = priv[1]
-    msgd = []
+    msgl = []
     a = ""
     for i in msgc:
         a = str(pow(i, d, n))
         while len(a) < 4:
             a = "0" + a
-        msgd.append(a)
-
-    return msgd
-
-    # Convertir le code ASCII en message #
-
-
-def convert_inverse(msgd):
-    msgdecrypte = ""
-    msgdecryptefin = ""
-    count = 0
-
-    print(msgd)
-
-    for i in range(len(msgd)):
-        msgdecrypte += str(msgd[i])
-
-    print(msgdecrypte)
-
-    while msgdecrypte[count] == "0":
-        count = count + 1
-
-    if len(msgdecrypte[count:]) % 3 == 0:
-        msgdecrypte = msgdecrypte[count:]
-    else:
-        msgdecrypte = msgdecrypte[count-1:]
-
-    msgdecryptev = msgdecrypte
-
-    while len(msgdecrypte) != 0:
-        part = msgdecrypte[:3]
-        msgdecryptefin += str(chr(int(part)))
-        msgdecrypte = msgdecrypte[3:]
-        part = ""
+        msgl.append(a)
     
-    msgfin = msgdecryptev,msgdecryptefin
-    
-    return msgfin
+    msgdv =""
 
 
-def binaire (msgfin) :
-    msgbin = bin(int(msgfin[0]))
+    for i in msgl :
+        msgdv += str(i)
+
+    return msgdv
+
+def binaire (msgl) :
+    msgbin = bin(int(msgl))
     part = []
     binmid = []
     
@@ -176,6 +147,7 @@ def binaire (msgfin) :
 
 
     return binfin
+
 
 def tabmatrice(msgbin) :
     vect_msg = []
@@ -297,30 +269,46 @@ def debin(mfinal) :
     return msgl
 
 
+def convert_inverse(msgl):
+    msgdecrypte = ""
+    msgdecryptefin = ""
+    count = 0
 
-## Variables ##
+    #for i in range(len(msgl)):
+       #msgdecrypte += str(msgl[i])
+
+    while msgl[count] == "0":
+        count = count + 1
+
+    if len(msgdecrypte[count:]) % 3 == 0:
+        msgdecrypte = msgdecrypte[count:]
+    else:
+        msgdecrypte = msgdecrypte[count-1:]
+
+    msgdecryptev = msgdecrypte
+
+    while len(msgdecrypte) != 0:
+        part = msgdecrypte[:3]
+        msgdecryptefin += str(chr(int(part)))
+        msgdecrypte = msgdecrypte[3:]
+        part = ""
+    
+    msgfin = msgdecryptev,msgdecryptefin
+    
+    return msgfin
+
+
 
 n, pub, priv = key_creation()
 msgc = encryption(n, pub, msg)
 msgd = decryption(n, priv, msgc)
-msgfin = convert_inverse(msgd)
-msgbin = binaire(msgfin)
+msgbin = binaire(msgd)
 
 vect_msg = tabmatrice(msgbin)
 msg_noise = tabnoise(vect_msg)
 mfinal = tabledenoise(msg_noise)
 msgl = debin(mfinal)
+#msgfin = convert_inverse(msgl)
 
 
-## Print ##
-
-#print(convert_msg(msg))
-#print(encryption(n, pub, msg))
-#print(decryption(n, priv, msgc))
-print(convert_inverse(msgd))
-#print(binaire(msgfin))
-
-#print(vect_msg)
-#print(msg_noise)
-#print(mfinal)
-#print(msgl)
+print(msgd)

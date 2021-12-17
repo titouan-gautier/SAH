@@ -1,0 +1,24 @@
+Message de 4 bits :
+[1, 1, 0, 1] 
+
+Message de 7 bits :
+[[1]
+ [0]
+ [1]
+ [0]
+ [1]
+ [0]
+ [1]] 
+
+Message bruité :
+[[1]
+ [0]
+ [1]
+ [0]
+ [0]
+ [0]
+ [1]] 
+
+Message débruité
+1101 
+

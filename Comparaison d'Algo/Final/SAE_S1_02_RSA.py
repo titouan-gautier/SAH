@@ -1,13 +1,9 @@
-## Import ##
+#### Import ####
 
 import random
 
-## Message ##
 
-msg = "hello world"
-
-## Question 1.1 ##
-
+#### Question 1.1 ####
 
 def list_prime(x):
     i = 1
@@ -26,8 +22,8 @@ def list_prime(x):
         i = i+1
     return liste[25:]
 
-## Question 1.2 ##
 
+#### Question 1.2 ####
 
 def extended_gcd(a, b):
     if a < b:
@@ -40,8 +36,8 @@ def extended_gcd(a, b):
         u0, u1, v0, v1 = v0, v1, u0-q*v0, u1-q*v1
     return a, u0, u1
 
-## Question 1.3 ##
 
+#### Question 1.3 ####
 
 def key_creation():
     p = random.choice(list_prime(2000))
@@ -64,10 +60,10 @@ def key_creation():
     priv = (n, d-1)
     return n, pub, priv
 
-## Question 1.4 ##
 
-    # Convertir le message en code ASCII #
+#### Question 1.4 ####
 
+    ## Convertir le message en code ASCII ##
 
 def convert_msg(msg):
     msgcrypte = ""
@@ -89,11 +85,10 @@ def convert_msg(msg):
 
     return msgcrypte2
 
-    # Encrypter le msg #
 
+    ## Encrypter le msg ##
 
-def encryption(n, pub, msg):
-    msgconvert = convert_msg(msg)
+def encryption(n, pub, msgconvert):
     e = pub[1]
     n = pub[0]
     msgc = []
@@ -101,10 +96,9 @@ def encryption(n, pub, msg):
         msgc.append(pow(int(i), e, n))
     return msgc
 
-## Question 1.5 ##
+#### Question 1.5 ####
 
-    # Décrypter le message #
-
+    ## Décrypter le message ##
 
 def decryption(n, priv, msgc):
     d = priv[1]
@@ -118,8 +112,8 @@ def decryption(n, priv, msgc):
 
     return msgd
 
-    # Convertir le code ASCII en message #
 
+    ## Convertir le code ASCII en message ##
 
 def convert_inverse(msgd):
     msgdecrypte = ""
@@ -144,16 +138,26 @@ def convert_inverse(msgd):
         part = ""
     return msgdecryptefin
 
-## Variables ##
 
+#### Variables ####
 
+msg = "hello world"
 n, pub, priv = key_creation()
-msgc = encryption(n, pub, msg)
+msgconvert = convert_msg(msg)
+msgc = encryption(n, pub, msgconvert)
 msgd = decryption(n, priv, msgc)
+msgfinal = convert_inverse(msgd)
 
-## Print ##
 
-print(convert_msg(msg))
-print(encryption(n, pub, msg))
-print(decryption(n, priv, msgc))
-print(convert_inverse(msgd))
+#### Print ####
+
+print("Message envoyé :")
+print(msg,"\n")
+print("Message converti en code ASCII :")
+print(msgconvert,"\n")
+print("Message crypté :")
+print(msgc,"\n")
+print("Message décrypté")
+print(msgd,"\n")
+print("Message reçu :")
+print(msgfinal,"\n")
