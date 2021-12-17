@@ -141,7 +141,7 @@ def convert_inverse(msgd):
 
 #### Variables ####
 
-msg = "hello world"
+msg = "Indignitatis praecipites cum urbe ut quidem paucis pellerentur remanerent veri \nformidatam urbe paucis quique cum id id ne extrusis haut ulla disciplinarum inopiam praecipites remanerent \nadseclae indignitatis tempus pellerentur inpendio sine ut indignitatis tria ulla inpendio \npraecipites veri indignitatis alimentorum ad minimarum tria formidatam ad disciplinarum ad sine ulla ad\n choris id ob extrusis minimarum disciplinarum ita id milia ob cum extrusis minimarum quique quidem\n ad est ut sectatoribus respiratione adseclae extrusis inopiam paucis inpendio magistris ad extrusis\n adseclae quidem ab cum choris sectatoribus paucis ad interpellata liberalium tempus et et remanerent ventum \nventum inpendio saltatricum quique tria quidem totidemque."
 n, pub, priv = key_creation()
 msgconvert = convert_msg(msg)
 msgc = encryption(n, pub, msgconvert)

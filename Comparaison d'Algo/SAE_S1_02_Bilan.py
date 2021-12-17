@@ -3,6 +3,10 @@
 import random
 import numpy as np
 
+#### Message ####
+
+msg = "b"
+
 
 #### Fonction qui donne une liste de nombre premier de 25 à n. ####
 
@@ -84,7 +88,7 @@ def convert_msg(msg):
 
     return msgcrypte2
 
-
+    
 #### Fonction qui encrypte notre message ####
 
 def encryption(n, pub, msg):
@@ -95,37 +99,34 @@ def encryption(n, pub, msg):
     temp = ""
     for i in msgconvert:
         temp = pow(int(i), e, n)
-        while len(str(temp)) != len(str(n)):
+        while len(str(temp)) != len(str(n)) :
             temp = "0" + str(temp)
         msgc.append(temp)
 
     msgcv = ""
 
-    for i in msgc:
+    for i in msgc :
         msgcv += str(i)
     return msgcv
-
+    
 
 #### Fonction qui transforme notre message crypter en binaire ####
 
-def binaire(msgl):
+def binaire (msgl) :
+    print(msgl)
     msgbin = bin(int(msgl))
-
     part = []
     binmid = []
-
+    
     tab = msgbin.split('b')
     strbin = tab[1]
-
-    while len(strbin) % 4 != 0:
-        strbin = "0" + strbin
-
-    while len(strbin) != 0:
+    while len(strbin) != 0 :
         part = strbin[:1]
         binmid.append(int(part))
         strbin = strbin[1:]
         part = ""
-
+    
+    print(binmid)
     binfin = []
 
     for i in range(int(len(binmid)/4)):
@@ -137,49 +138,49 @@ def binaire(msgl):
 
 #### Programme qui convertit notre message binaire en tableau de matrice ####
 
-def tabmatrice(msgbin):
+def tabmatrice(msgbin) :
     vect_msg = []
-
-    for i in msgbin:
-        vect_msg.append(matrice(i))
-
+    
+    for i in msgbin :
+        vect_msg.append(matrice(i))  
+    
     return vect_msg
 
 
 #### Programme qui convertit une matrice de 4 bit en 7 bit ####
 
-def matrice(msgbin):
-
+def matrice(msgbin) :
+    
     M = np.array([
-        [1, 1, 0, 1],
-        [1, 0, 1, 1],
-        [1, 0, 0, 0],
-        [0, 1, 1, 1],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ])
-
+        [1,1,0,1],
+        [1,0,1,1],
+        [1,0,0,0],
+        [0,1,1,1],
+        [0,1,0,0],
+        [0,0,1,0],
+        [0,0,0,1]
+        ])
+    
     vect_msg = []
-
-    for i in range(len(msgbin)):
+    
+    for i in range(len(msgbin)) :
         vect_msg.append([(msgbin[i])])
 
     math = M@vect_msg
-
-    for j, k in enumerate(math):
-        math[j] = k % 2
-
+    
+    for j,k in enumerate(math) :
+        math[j] = k%2
+        
     return math
 
 
 #### Programme qui bruite notre tableau de matrice ####
 
-def tabnoise(vect_msg):
+def tabnoise(vect_msg) :
 
-    tnoise = []
+    tnoise =[]
 
-    for i in vect_msg:
+    for i in vect_msg :
         tnoise.append(noise(i))
 
     return tnoise
@@ -188,20 +189,20 @@ def tabnoise(vect_msg):
 #### Programme qui bruite une matrice de 7 bits ####
 
 def noise(vect_msg):
-    # on fait une copie du vecteur initial
+    ### on fait une copie du vecteur initial
     msg_noise = vect_msg.copy()
-    # une chance sur quatre de ne pas bruiter le vecteur
-    test = np.random.randint(0, 4)
-    if test > 0:
-        index = np.random.randint(0, np.size(msg_noise))
-        msg_noise[index] = (msg_noise[index] + 1) % 2
-
+    ### une chance sur quatre de ne pas bruiter le vecteur
+    test = np.random.randint(0,4)
+    if test>0:
+        index = np.random.randint(0,np.size(msg_noise))
+        msg_noise[index] = (msg_noise[index] +1)%2
+    
     return msg_noise
 
 
-# Programme
+#### Programme
 
-def tabledenoise(msg_noise):
+def tabledenoise(msg_noise) :
 
     tdenoise = []
     for i in msg_noise:
@@ -212,55 +213,56 @@ def tabledenoise(msg_noise):
 
 #### Programme qui retire le bruit d'une matrice de 7 bits ####
 
-def denoise(msg_noise):
-
+def denoise(msg_noise) :
+    
     mat16 = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 0, 1, 0, 0, 1],
-        [0, 1, 0, 1, 0, 1, 0],
-        [1, 0, 0, 0, 0, 1, 1],
-        [1, 0, 0, 1, 1, 0, 0],
-        [0, 1, 0, 0, 1, 0, 1],
-        [0, 0, 1, 1, 0, 0, 1],
-        [0, 0, 0, 1, 1, 1, 1],
-        [1, 1, 1, 0, 0, 0, 0],
-        [1, 1, 0, 0, 1, 1, 0],
-        [1, 0, 1, 1, 0, 1, 0],
-        [0, 1, 1, 0, 0, 1, 1],
-        [0, 1, 1, 1, 1, 0, 0],
-        [1, 0, 1, 0, 1, 0, 1],
-        [0, 0, 1, 0, 1, 1, 0],
-        [1, 1, 1, 1, 1, 1, 1],
+        [0,0,0,0,0,0,0],
+        [1,1,0,1,0,0,1],
+        [0,1,0,1,0,1,0],
+        [1,0,0,0,0,1,1],
+        [1,0,0,1,1,0,0],
+        [0,1,0,0,1,0,1],
+        [0,0,1,1,0,0,1],
+        [0,0,0,1,1,1,1],
+        [1,1,1,0,0,0,0],
+        [1,1,0,0,1,1,0],
+        [1,0,1,1,0,1,0],
+        [0,1,1,0,0,1,1],
+        [0,1,1,1,1,0,0],
+        [1,0,1,0,1,0,1],
+        [0,0,1,0,1,1,0],
+        [1,1,1,1,1,1,1],
     ])
 
-    for m in mat16:
-
+    for m in mat16 :
+        
         msgcomp = []
-
+        
         for i in range(7):
             msgcomp.append(msg_noise[i] + (m[i] % 2))
-
+            
         c = 0
-
-        for j in msgcomp:
-            if j == 1:
+        
+        for j in msgcomp :
+            if j == 1 :
                 c = c + 1
-        if c == 0 or c == 1:
+        if c == 0 or c == 1 :
             return str(m[2]) + str(m[4]) + str(m[5]) + str(m[6])
-
+ 
 
 #### Fonctions qui transforme notre message bianire en décimal ####
 
-def debin(mfinal):
+def debin(mfinal) :
+    
+    strm =""
 
-    strm = ""
-
-    for i in mfinal:
+    for i in mfinal :
         strm += str(i)
 
     strm = "0b" + strm
+    
 
-    msgl = int(strm, 2)
+    msgl = int(strm,2)
 
     return msgl
 
@@ -268,20 +270,20 @@ def debin(mfinal):
 #### Fonctions qui décrypte notre message ####
 
 def decryption(n, priv, msgl):
-
+    
     length = len(str(n))
     msg = str(msgl)
-    while len(msg) % length != 0:
+    while len(msg) % length != 0 :
         msg = "0" + msg
-
+    
     part = ""
     msgd = []
 
-    while len(msg) != 0:
+    while len(msg) != 0 :
         part = msg[:length]
         msgd.append(int(part))
         msg = msg[length:]
-        part = ""
+        part= ""
 
     d = priv[1]
     msg = []
@@ -291,10 +293,10 @@ def decryption(n, priv, msgl):
         while len(a) < 4:
             a = "0" + a
         msg.append(a)
+    
+    msgdv =""
 
-    msgdv = ""
-
-    for i in msg:
+    for i in msg :
         msgdv += str(i)
 
     return msgdv
@@ -322,15 +324,13 @@ def convert_inverse(msgdv):
         msgdecryptefin += str(chr(int(part)))
         msgdecrypte = msgdecrypte[3:]
         part = ""
-
+    
     msgfin = msgdecryptefin
-
+    
     return msgfin
 
 
 #### Variables ####
-
-msg = "Indignitatis praecipites cum urbe ut quidem paucis pellerentur remanerent veri \nformidatam urbe paucis quique cum id id ne extrusis haut ulla disciplinarum inopiam praecipites remanerent \nadseclae indignitatis tempus pellerentur inpendio sine ut indignitatis tria ulla inpendio \npraecipites veri indignitatis alimentorum ad minimarum tria formidatam ad disciplinarum ad sine ulla ad\n choris id ob extrusis minimarum disciplinarum ita id milia ob cum extrusis minimarum quique quidem\n ad est ut sectatoribus respiratione adseclae extrusis inopiam paucis inpendio magistris ad extrusis\n adseclae quidem ab cum choris sectatoribus paucis ad interpellata liberalium tempus et et remanerent ventum \nventum inpendio saltatricum quique tria quidem totidemque."
 
 n, pub, priv = key_creation()
 msgconvert = convert_msg(msg)
@@ -342,31 +342,29 @@ msg_noise = tabnoise(vect_msg)
 mfinal = tabledenoise(msg_noise)
 msgl = debin(mfinal)
 
-msgdv = decryption(n, priv, msgl)
+msgdv = decryption(n,priv,msgl)
 msgfin = convert_inverse(msgdv)
 
 
 #### Print ####
 
 print("Message envoyé :")
-print(msg, "\n")
+print(msg,"\n")
 print("Message converti en code ASCII :")
-print(msgconvert, "\n")
+print(msgconvert,"\n")
 print("Message crypté :")
-print(msgc, "\n")
-print("Message converti en binaire :",)
-print(msgbin, "\n")
-
+print(msgc,"\n")
+print("Message converti en binaire :" ,)
+print(msgbin,"\n")
 """ print("Message sous forme de tableau de matrice de 7 bits :")
 print(vect_msg,"\n")
 print("Message bruité :")
 print(msg_noise,"\n")
 print("Message debruité :")
-print(mfinal,"\n") """
-
+print(mfinal,"\n")
 print("Debin :",)
-print(msgl, "\n")
+print(msgl,"\n")
 print("Decryptr :")
-print(msgdv, "\n")
+print(msgdv,"\n")
 print("Deconvert :")
-print(msgfin, "\n")
+print(msgfin,"\n")  """
